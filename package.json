@@ -1,26 +1,42 @@
 {
-  "name": "2-server",
+  "name": "bucket.server",
   "version": "1.0.0",
-  "description": "",
+  "description": "api server for the bucket.space application",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development ts-node-dev --respawn bin/server.ts",
-    "start": "NODE_ENV=production ts-node bin/server.ts",
-    "deploy": "NODE_ENV=production pm2 start build/bin/server.js",
+    "dev": "NODE_ENV=development ENV=ts ts-node-dev --respawn bin/server.ts",
+    "start": "NODE_ENV=production ENV=ts ts-node bin/server.ts",
+    "deploy": "NODE_ENV=production ENV=js pm2 start build/bin/server.js",
     "build": "tsc && resolve-tspaths",
-    "build:dev": "NODE_ENV=production nodemon build/bin/server.js",
-    "build:start": "NODE_ENV=production node build/bin/server.js"
+    "build:dev": "NODE_ENV=production ENV=js nodemon build/bin/server.js",
+    "build:start": "NODE_ENV=production ENV=js node build/bin/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.17",
     "@types/module-alias": "^2.0.2",
+    "@types/moment": "^2.13.0",
+    "@types/morgan": "^1.9.5",
+    "@types/winston": "^2.4.4",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "module-alias": "^2.2.3",
+    "moment": "^2.29.4",
+    "morgan": "^1.10.0",
     "resolve-tspaths": "^0.8.15",
+    "winston": "^3.10.0"
+  },
+  "devDependencies": {
+    "@types/nodemon": "^1.19.2",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
+  },
+  "_moduleAliases": {
+    "@": "./"
   }
 }
