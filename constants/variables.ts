@@ -8,6 +8,8 @@ const LIMIT = process.env.LIMIT as string;
 const SECRET = process.env.SECRET as string;
 const SALT = process.env.SALT as string;
 const MONGO_DB_URL = process.env.MONGO_DB_URL as string;
+const JWT_SECRET = process.env.JWT_SECRET as string;
+const EXPIRES_IN = process.env.EXPIRES_IN as string;
 
 const variables = {
   PORT,
@@ -16,7 +18,9 @@ const variables = {
   LIMIT,
   SECRET,
   SALT,
-  MONGO_DB_URL
+  MONGO_DB_URL,
+  JWT_SECRET,
+  EXPIRES_IN
 }
 
 export default variables;

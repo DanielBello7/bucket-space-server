@@ -2,6 +2,7 @@ import { morganErrorHandler, morganSuccessHandler } from './config/morgan.config
 import { variables } from './constants';
 import cors from 'cors';
 import express from 'express';
+import routes from './routes/index.routes';
 import secret from './config/secret.config';
 import session from 'express-session';
 import compression from 'compression';
@@ -10,11 +11,15 @@ import handleNotFoundError from './middlewares/not-found-error';
 import convertError from './middlewares/convert-error';
 import handleError from './middlewares/handle-error';
 import documentation from './middlewares/documentation';
+import initialize from './middlewares/passport';
+import passport from 'passport';
 
 function serverApplication() {
   const app = express();
 
   const whitelist: string[] = []
+
+  initialize(passport);
 
   app.use(morganSuccessHandler);
   app.use(morganErrorHandler);
@@ -36,8 +41,10 @@ function serverApplication() {
     }
   }));
 
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use('/', documentation());
-  app.get('/api/v1', (req, res) => res.send('done'));
+  app.get('/api/v1', routes());
   app.use(handleNotFoundError);
   app.use(convertError);
   app.use(handleError);
