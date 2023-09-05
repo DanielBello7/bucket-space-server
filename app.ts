@@ -9,7 +9,7 @@ import handleIconError from './middlewares/handle-icon-error';
 import handleNotFoundError from './middlewares/not-found-error';
 import convertError from './middlewares/convert-error';
 import handleError from './middlewares/handle-error';
-import documentation from './modules/documentation';
+import documentation from './middlewares/documentation';
 
 function serverApplication() {
   const app = express();

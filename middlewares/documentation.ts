@@ -2,15 +2,12 @@ import swaggerUi from 'swagger-ui-express';
 import express from 'express';
 import logger from '@/config/logger.config';
 import yaml from 'yaml';
-import path from 'path';
-import fs from 'fs';
-import { variables } from '@/constants';
+import { variables, docs } from '@/constants';
 
 const router = express.Router();
 const port = variables.PORT;
 
-const swagger_file = fs.readFileSync(path.join(__dirname, '/docs.yml'), 'utf8');
-const swagger_document = yaml.parse(swagger_file);
+const swagger_document = yaml.parse(docs.swaggerFile);
 
 function documentation() {
   router.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swagger_document));

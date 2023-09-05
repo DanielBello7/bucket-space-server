@@ -1,2 +1,7 @@
 import variables from "./variables";
-export { variables }
+import * as docs from './docs';
+
+export {
+  variables,
+  docs
+}

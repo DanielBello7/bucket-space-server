@@ -4,12 +4,12 @@
   "description": "api server for the bucket.space application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development ENV=ts ts-node-dev --respawn bin/server.ts",
-    "start": "NODE_ENV=production ENV=ts ts-node bin/server.ts",
+    "test": "NODE_ENV=development LANG=ts mocha --require ts-node/register --watch-extensions ts src/__tests__/**/*.ts",
     "deploy": "NODE_ENV=production ENV=js pm2 start build/bin/server.js",
     "build": "tsc && resolve-tspaths",
-    "build:dev": "NODE_ENV=production ENV=js nodemon build/bin/server.js",
+    "dev": "NODE_ENV=development ENV=ts ts-node-dev --respawn bin/server.ts",
+    "start": "NODE_ENV=production ENV=ts ts-node bin/server.ts",
+    "build:dev": "NODE_ENV=development ENV=js nodemon build/bin/server.js",
     "build:start": "NODE_ENV=production ENV=js node build/bin/server.js"
   },
   "keywords": [],
