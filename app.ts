@@ -9,10 +9,11 @@ import handleIconError from './middlewares/handle-icon-error';
 import handleNotFoundError from './middlewares/not-found-error';
 import convertError from './middlewares/convert-error';
 import handleError from './middlewares/handle-error';
+import documentation from './modules/documentation';
 
 const whitelist: string[] = []
 
-export default function serverApplication() {
+function serverApplication() {
   const app = express();
 
   app.use(morganSuccessHandler);
@@ -38,9 +39,12 @@ export default function serverApplication() {
   app.get('/', (req, res) => {
     return res.send('done');
   });
+  app.use(documentation);
   app.use(handleNotFoundError);
   app.use(convertError);
   app.use(handleError);
 
   return app;
 }
+
+export default serverApplication;
