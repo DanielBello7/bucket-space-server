@@ -11,10 +11,10 @@ import convertError from './middlewares/convert-error';
 import handleError from './middlewares/handle-error';
 import documentation from './modules/documentation';
 
-const whitelist: string[] = []
-
 function serverApplication() {
   const app = express();
+
+  const whitelist: string[] = []
 
   app.use(morganSuccessHandler);
   app.use(morganErrorHandler);
@@ -36,10 +36,8 @@ function serverApplication() {
     }
   }));
 
-  app.get('/', (req, res) => {
-    return res.send('done');
-  });
-  app.use(documentation);
+  app.use('/', documentation());
+  app.get('/api/v1', (req, res) => res.send('done'));
   app.use(handleNotFoundError);
   app.use(convertError);
   app.use(handleError);
