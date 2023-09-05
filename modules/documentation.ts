@@ -20,7 +20,7 @@ function documentation() {
     res.send(swagger_document);
   });
 
-  logger.info(`version docs are available at http://localhost:${port}/api/v1/docs`);
+  logger.info(`VERSION 1 DOCS AVAILABLE AT http://localhost:${port}/api/v1/docs`);
   return router;
 }
 
