@@ -12,7 +12,7 @@ const LocalStrategy = localAuth.Strategy;
 const JWTStrategy = jwtAuth.Strategy;
 
 function initialize(passport: PassportStatic) {
-  const { JWT_SECRET } = variables;
+  const { JWT_GENERAL_SECRET } = variables;
   const authError = new APIError(httpStatus.UNAUTHORIZED, 'invalid credentials');
 
   const authenticateUser = new LocalStrategy(
@@ -25,7 +25,7 @@ function initialize(passport: PassportStatic) {
         const response = await UserModel.findOne({ email: email });
         if (!response || (response && !bcrypt.compareSync(password, response.password))) return done(authError);
         const user: any = response;
-        const key = generateToken({ ...user._doc }, JWT_SECRET);
+        const key = generateToken({ ...user._doc }, JWT_GENERAL_SECRET);
         done(null, { user, key });
       } catch (error) { done(error) }
     }
@@ -34,7 +34,7 @@ function initialize(passport: PassportStatic) {
   const jwtAuthenticate = new JWTStrategy(
     {
       jwtFromRequest: jwtAuth.ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: variables.JWT_SECRET,
+      secretOrKey: JWT_GENERAL_SECRET,
       issuer: 'inScript'
     },
     async function (payload, done) {
@@ -46,8 +46,8 @@ function initialize(passport: PassportStatic) {
     }
   );
 
-  passport.use('jwt-auth', jwtAuthenticate);
-  passport.use('users', authenticateUser);
+  passport.use('auth', authenticateUser);
+  passport.use('jwt', jwtAuthenticate);
 }
 
 export default initialize;
