@@ -3,7 +3,11 @@ import { _Request, _Response, _NextFunction } from "@/global";
 class UsersController {
   constructor() { }
 
-  getUsers = async (req: _Request, res: _Response, next: _NextFunction) => { }
+  updateUserPassword = async (req: _Request, res: _Response, next: _NextFunction) => {
+    try {
+
+    } catch (error) { next(error) }
+  }
 }
 
 export default UsersController;

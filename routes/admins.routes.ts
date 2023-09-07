@@ -4,6 +4,6 @@ const router = express.Router();
 
 export default () => {
   const admins = new AdminsController();
-  router.get('/', admins.getAdmins);
+  router.get('/:adminId/', admins.findAdmin);
   return router;
 }
