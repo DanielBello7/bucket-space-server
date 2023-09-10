@@ -1,5 +1,5 @@
-import { _Request, _NextFunction, _Response } from "@/global"
-import ConsumerService from "@/services/consumers.service"
+import { _Request, _NextFunction, _Response } from "@/global";
+import ConsumerService from "@/services/consumers.service";
 
 class ConsumersController {
   private consumerService: ConsumerService;
