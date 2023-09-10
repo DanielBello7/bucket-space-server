@@ -19,6 +19,12 @@ const ConsumerSchema = new mongoose.Schema<CONSUMER>({
   }
 }, { timestamps: true });
 
+ConsumerSchema.set("toJSON", {
+  transform(_doc, ret) {
+    delete ret.__v;
+  },
+});
+
 ConsumerSchema.plugin(paginate);
 const ConsumerModel = mongoose.model<CONSUMER, mongoose.PaginateModel<CONSUMER>>("consumers", ConsumerSchema);
 export default ConsumerModel;

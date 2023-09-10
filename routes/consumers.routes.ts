@@ -2,7 +2,6 @@ import ConsumersController from '@/controllers/consumers.controller';
 import bodyValidate from '@/middlewares/body-validate';
 import express from 'express';
 import { check } from 'express-validator';
-
 const router = express.Router();
 
 export default () => {

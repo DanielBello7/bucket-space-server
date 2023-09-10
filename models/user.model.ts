@@ -24,6 +24,13 @@ const UserSchema = new mongoose.Schema<USER>({
   }
 }, { timestamps: true });
 
+UserSchema.set("toJSON", {
+  transform(_doc, ret) {
+    delete ret.password;
+    delete ret.__v;
+  },
+});
+
 UserSchema.pre("save", async function (next) {
   const salt = parseInt(variables.SALT);
   try {

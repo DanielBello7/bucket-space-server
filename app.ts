@@ -21,6 +21,7 @@ function serverApplication() {
 
   initialize(passport);
 
+  app.use(handleIconError);
   app.use(morganSuccessHandler);
   app.use(morganErrorHandler);
   app.use(cors({ origin: whitelist, credentials: true }));
@@ -28,10 +29,9 @@ function serverApplication() {
   app.use(express.json({ limit: variables.LIMIT }));
   app.use(express.urlencoded({ extended: true }));
   app.use(secret);
-  app.use(handleIconError);
 
   app.use(session({
-    secret: variables.SECRET,
+    secret: variables.EXPRESS_SECRET,
     resave: true,
     saveUninitialized: true,
     cookie: {

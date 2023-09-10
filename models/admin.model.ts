@@ -16,6 +16,12 @@ const AdminSchema = new mongoose.Schema<ADMIN>({
   }
 }, { timestamps: true });
 
+AdminSchema.set("toJSON", {
+  transform(_doc, ret) {
+    delete ret.__v;
+  },
+});
+
 AdminSchema.plugin(paginate);
 const AdminModel = mongoose.model<ADMIN, mongoose.PaginateModel<ADMIN>>("admins", AdminSchema);
 export default AdminModel;
