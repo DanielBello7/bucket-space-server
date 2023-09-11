@@ -1,9 +1,13 @@
 import { PaginateResult, PaginateOptions } from "mongoose";
+import { POSTS } from "@/global";
 import CONSUMER from '@/interfaces/consumer.interface';
+import ConsumerThemeModel from "@/models/consumer-theme.model";
 import USER from '@/interfaces/user.interface';
 import UserModel from "@/models/user.model";
 import APIError from "@/modules/api-error";
 import ConsumerModel from "@/models/consumer.model";
+import CONSUMER_THEMES from "@/interfaces/consumer-theme.interface";
+import PostModel from "@/models/post.model";
 
 class ConsumerService {
   constructor() { }
@@ -38,6 +42,36 @@ class ConsumerService {
     const res = await ConsumerModel.findOne({ _id: consumerId }).populate("userId");
     if (res) return res;
     throw new APIError(500, 'error updating user information');
+  }
+
+  getConsumerThemes = async (consumerId: string): Promise<CONSUMER_THEMES[]> => {
+    const themes = await ConsumerThemeModel
+      .find({ consumerId: consumerId })
+      .populate(["consumerId", "themeId"]);
+    return themes;
+  }
+
+  createConsumerThemes = async (consumerId: string, data: Partial<CONSUMER_THEMES>[]): Promise<CONSUMER_THEMES[]> => {
+    const checkUser = await ConsumerModel.findOne({ _id: consumerId });
+    if (!checkUser) throw new APIError(404, 'user not registered');
+    const res = await ConsumerThemeModel.insertMany(data);
+    return res as CONSUMER_THEMES[];
+  }
+
+  deleteConsumerTheme = async (consumerId: string, themeId: string) => {
+    await ConsumerThemeModel.deleteOne({ consumerId, themeId });
+  }
+
+  getConsumerFeed = async (consumerId: string): Promise<PaginateResult<POSTS>> => {
+    const options: PaginateOptions = {
+      populate: [
+        {
+          path: "createdBy"
+        }
+      ]
+    }
+    const posts = await PostModel.paginate({}, options);
+    return posts;
   }
 }
 

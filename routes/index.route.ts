@@ -1,7 +1,7 @@
-import admins from './admins.routes';
-import consumers from './consumers.routes';
+import admins from './admins.route';
+import consumers from './consumers.route';
 import express from 'express';
-import users from './users.routes';
+import users from './users.route';
 const router = express.Router();
 
 export default () => {

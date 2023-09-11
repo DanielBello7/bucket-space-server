@@ -2,7 +2,7 @@ import { morganErrorHandler, morganSuccessHandler } from './config/morgan.config
 import { variables } from './constants';
 import cors from 'cors';
 import express from 'express';
-import routes from './routes/index.routes';
+import routes from './routes/index.route';
 import secret from './config/secret.config';
 import session from 'express-session';
 import compression from 'compression';

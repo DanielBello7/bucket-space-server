@@ -23,17 +23,20 @@ class ConsumersController {
     } catch (error) { next(error) }
   }
 
-  // not done need themes model
   getConsumerThemes = async (req: _Request, res: _Response, next: _NextFunction) => {
     try {
-
+      const consumerId = req.params.consumerId;
+      const response = await this.consumerService.getConsumerThemes(consumerId);
+      res.json({ status: "OK", msg: "success", payload: response });
     } catch (error) { next(error) }
   }
 
-  // not done need posts model
+  // not done properly tho
   getConsumerFeed = async (req: _Request, res: _Response, next: _NextFunction) => {
     try {
-
+      const consumerId = req.params.consumerId;
+      const response = await this.consumerService.getConsumerFeed(consumerId);
+      res.json({ status: "0K", msg: "success", payload: response });
     } catch (error) { next(error) }
   }
 
@@ -67,17 +70,22 @@ class ConsumersController {
     } catch (error) { next(error) }
   }
 
-  // not done needs theme model
   addConsumerTheme = async (req: _Request, res: _Response, next: _NextFunction) => {
     try {
-
+      const consumerId = req.params.consumerId;
+      const themeIds = req.body.themes;
+      const themes = themeIds.map((item: string) => ({ consumerId, item }));
+      const response = await this.consumerService.createConsumerThemes(consumerId, themes);
+      res.json({ status: "OK", msg: "success", payload: response });
     } catch (error) { next(error) }
   }
 
-  // not done needs theme model
   removeConsumerTheme = async (req: _Request, res: _Response, next: _NextFunction) => {
     try {
-
+      const consumerId = req.params.consumerId;
+      const themeId = req.params.themeId;
+      this.consumerService.deleteConsumerTheme(consumerId, themeId);
+      res.json({ status: "OK", msg: "success", payload: null });
     } catch (error) { next(error) }
   }
 }
