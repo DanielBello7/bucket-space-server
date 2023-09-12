@@ -12,7 +12,7 @@ const LocalStrategy = localAuth.Strategy;
 const JWTStrategy = jwtAuth.Strategy;
 
 function initialize(passport: PassportStatic) {
-  const { JWT_GENERAL_SECRET } = variables;
+  const { JWT_GENERAL_SECRET, JWT_REFRESH_SECRET } = variables;
   const authError = new APIError(httpStatus.UNAUTHORIZED, 'invalid credentials');
 
   const authenticateUser = new LocalStrategy(
@@ -26,7 +26,8 @@ function initialize(passport: PassportStatic) {
         if (!response || (response && !bcrypt.compareSync(password, response.password))) return done(authError);
         const user: any = response;
         const key = generateToken({ ...user._doc }, JWT_GENERAL_SECRET);
-        done(null, { user, key });
+        const refreshToken = generateToken({ ...user._doc }, JWT_REFRESH_SECRET);
+        done(null, { user, key, refreshToken });
       } catch (error) { done(error) }
     }
   );

@@ -10,6 +10,7 @@ const EXPIRES_IN = process.env.EXPIRES_IN as string;
 const LIMIT = process.env.DATA_LIMIT as string;
 const EXPRESS_SECRET = process.env.EXPRESS_SECRET as string;
 const JWT_GENERAL_SECRET = process.env.JWT_GENERAL_SECRET as string;
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET as string;
 const MONGO_DB_URL = process.env.MONGO_DB_URL as string;
 const SERVER_ADDRESS = process.env.SERVER_ADDRESS as string;
 const APP_ADDRESS = process.env.APP_ADDRESS as string;
@@ -28,6 +29,7 @@ const variables = {
   LIMIT,
   EXPRESS_SECRET,
   JWT_GENERAL_SECRET,
+  JWT_REFRESH_SECRET,
   MONGO_DB_URL,
   SERVER_ADDRESS,
   APP_ADDRESS,

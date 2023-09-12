@@ -65,6 +65,7 @@ class PostController {
     } catch (error) { next(error) }
   }
 
+  // kinda done
   createPost = async (req: _Request, res: _Response, next: _NextFunction) => {
     try {
       const body = req.body;

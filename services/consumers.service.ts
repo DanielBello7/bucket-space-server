@@ -29,7 +29,7 @@ class ConsumerService {
   }
 
   findConsumer = async (id: string): Promise<CONSUMER> => {
-    const check = await ConsumerModel.findOne({ _id: id }).populate("userId");
+    const check = await ConsumerModel.findOne({ $or: [{ _id: id }, { userId: id }] }).populate("userId");
     if (check) return check;
     throw new APIError(404, 'user not registered');
   }

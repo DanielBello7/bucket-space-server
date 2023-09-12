@@ -6,7 +6,7 @@ class AdminService {
   constructor() { }
 
   findAdmin = async (adminId: string): Promise<ADMIN> => {
-    const check = await AdminModel.findOne({ _id: adminId }).populate("userId");
+    const check = await AdminModel.findOne({ $or: [{ _id: adminId }, { userId: adminId }] }).populate("userId");
     if (check) return check
     throw new APIError(404, 'user not registered');
   }
