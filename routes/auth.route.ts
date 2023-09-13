@@ -35,11 +35,7 @@ export default () => {
     passport.authenticate("auth"),
     auth.logoutUser);
 
-  router.post('/refresh/',
-    [
-      check('email').exists().isString().isEmail()
-    ],
-    bodyValidate,
+  router.get('/refresh/',
     passport.authenticate("refresh"),
     auth.refreshLoginCallback);
 

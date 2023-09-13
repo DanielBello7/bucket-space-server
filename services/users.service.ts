@@ -1,4 +1,5 @@
 import { variables } from '@/constants'
+import USER from '@/interfaces/user.interface';
 import UserModel from "@/models/user.model";
 import bcrypt from 'bcrypt';
 import APIError from "@/modules/api-error";
@@ -18,6 +19,20 @@ class UserService {
       throw new APIError(400, 'invalid credentials');
     const newHash = bcrypt.hashSync(data.newPassword, parseInt(variables.SALT));
     await UserModel.updateOne({ _id: userId }, { $set: { password: newHash } });
+  }
+
+  replaceUserPassword = async (email: string, newPassword: string) => {
+    const check = await UserModel.findOne({ email });
+    if (!check) throw new APIError(404, 'user not regisered');
+    const hashed = bcrypt.hashSync(newPassword, parseInt(variables.SALT));
+    await UserModel.updateOne({ email }, { $set: { password: hashed } });
+    return;
+  }
+
+  findUser = async (id: string): Promise<USER> => {
+    const user = await UserModel.findOne({ $or: [{ email: id }, { _id: id }] })
+    if (user) return user;
+    throw new APIError(404, 'user not registered');
   }
 }
 
