@@ -1,10 +1,6 @@
-import { variables } from '@/constants';
 import jwt from 'jsonwebtoken';
 
-function generateToken(data: any, key: string) {
-  return jwt.sign(data, key, {
-    expiresIn: variables.EXPIRES_IN
-  });
+export default function generateToken(data: any, key: string, expiresIn?: string): string {
+  if (!expiresIn) return jwt.sign(data, key);
+  return jwt.sign(data, key, { expiresIn });
 }
-
-export default generateToken;

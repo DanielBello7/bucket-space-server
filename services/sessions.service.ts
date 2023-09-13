@@ -1,4 +1,6 @@
+import SESSIONS from '@/interfaces/session.interface';
 import SessionModel from "@/models/session.model";
+import APIError from '@/modules/api-error';
 
 class SessionService {
   constructor() { }
@@ -13,6 +15,12 @@ class SessionService {
   deleteSession = async (email: string) => {
     await SessionModel.deleteMany({ email });
     return
+  }
+
+  findSession = async (email: string): Promise<SESSIONS> => {
+    const session = await SessionModel.findOne({ email });
+    if (session) return session;
+    throw new APIError(404, 'session unavailable');
   }
 }
 

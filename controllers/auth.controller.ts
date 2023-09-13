@@ -1,8 +1,9 @@
 import { _NextFunction, _Request, _Response } from "@/global";
+import { variables } from "@/constants";
 import AdminService from "@/services/admins.service";
-import USER from '@/interfaces/user.interface';
 import ConsumerService from "@/services/consumers.service";
 import SessionService from "@/services/sessions.service";
+import generateToken from "@/modules/generate-token";
 
 class AuthController {
   private adminService: AdminService;
@@ -35,7 +36,18 @@ class AuthController {
 
   logoutUser = async (req: _Request, res: _Response, next: _NextFunction) => {
     try {
+      const email = req.body.email;
+      await this.sessionService.deleteSession(email);
+      res.json({ status: "OK", msg: "success", payload: null });
+    } catch (error) { next(error) }
+  }
 
+  refreshLoginCallback = async (req: _Request, res: _Response, next: _NextFunction) => {
+    const { JWT_GENERAL_SECRET, EXPIRES_IN } = variables;
+    try {
+      const user = req.user;
+      const key = generateToken(user, JWT_GENERAL_SECRET, EXPIRES_IN);
+      res.json({ status: "OK", msg: "success", payload: { key, user } });
     } catch (error) { next(error) }
   }
 }
